@@ -213,6 +213,18 @@ hr {
 Activity &lt;- read.csv(paste(getwd(),&quot;/Assignment/activity.csv&quot;, sep=&quot;&quot;), header = TRUE
                 , sep = &quot;,&quot; , colClasses = c(&quot;numeric&quot;,&quot;Date&quot;,&quot;numeric&quot;))
 names(Activity) &lt;- c(&quot;Steps&quot;,&quot;Date&quot;,&quot;Interval&quot;)
+##      A first look to the data loaded
+summary(Activity)
+</code></pre>
+
+<pre><code>##      Steps            Date               Interval   
+##  Min.   :  0.0   Min.   :2012-10-01   Min.   :   0  
+##  1st Qu.:  0.0   1st Qu.:2012-10-16   1st Qu.: 589  
+##  Median :  0.0   Median :2012-10-31   Median :1178  
+##  Mean   : 37.4   Mean   :2012-10-31   Mean   :1178  
+##  3rd Qu.: 12.0   3rd Qu.:2012-11-15   3rd Qu.:1766  
+##  Max.   :806.0   Max.   :2012-11-30   Max.   :2355  
+##  NA&#39;s   :2304
 </code></pre>
 
 <p>####<strong>QUESTION 2: What is mean total number of steps taken per day?</strong><br/>

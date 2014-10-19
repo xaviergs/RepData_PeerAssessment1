@@ -21,6 +21,8 @@ setwd("C:/Users/xgs/Desktop/Coursera_Data _Science/5-Reproducible Research/Week 
 Activity <- read.csv(paste(getwd(),"/Assignment/activity.csv", sep=""), header = TRUE
                 , sep = "," , colClasses = c("numeric","Date","numeric"))
 names(Activity) <- c("Steps","Date","Interval")
+##      A first look to the data loaded
+summary(Activity)
 ```
 
 ####**QUESTION 2: What is mean total number of steps taken per day?**  

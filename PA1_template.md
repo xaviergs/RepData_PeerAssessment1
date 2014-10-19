@@ -15,6 +15,19 @@ setwd("C:/Users/xgs/Desktop/Coursera_Data _Science/5-Reproducible Research/Week 
 Activity <- read.csv(paste(getwd(),"/Assignment/activity.csv", sep=""), header = TRUE
                 , sep = "," , colClasses = c("numeric","Date","numeric"))
 names(Activity) <- c("Steps","Date","Interval")
+##      A first look to the data loaded
+summary(Activity)
+```
+
+```
+##      Steps            Date               Interval   
+##  Min.   :  0.0   Min.   :2012-10-01   Min.   :   0  
+##  1st Qu.:  0.0   1st Qu.:2012-10-16   1st Qu.: 589  
+##  Median :  0.0   Median :2012-10-31   Median :1178  
+##  Mean   : 37.4   Mean   :2012-10-31   Mean   :1178  
+##  3rd Qu.: 12.0   3rd Qu.:2012-11-15   3rd Qu.:1766  
+##  Max.   :806.0   Max.   :2012-11-30   Max.   :2355  
+##  NA's   :2304
 ```
 
 ####**QUESTION 2: What is mean total number of steps taken per day?**  
