@@ -1,22 +1,16 @@
 Reproducible Research Peer Assessment 1
 =======================================  
 
-```{r setoptions, echo = FALSE,warning = FALSE}
-library(knitr)
-opts_chunk$set(warning = FALSE)
-windowsFonts(A=windowsFont("Trebuchet MS"))
-```
-```{r SetUpEnvironment, echo = FALSE}
-setwd("C:/Users/xgs/Desktop/Coursera_Data _Science/5-Reproducible Research/Week 2")
-library(ggplot2)
-```
+
+
 
 ####**QUESTION 1: Loading and preprocessing the data**  
 1. Get the data from the file in the right format and convert the 'date' field to date type  
 2. Show the main facts about the raw data for exploration  
 
 *Read the csv file and evaluate a summary to check the data*
-```{r LoadData, echo=TRUE}
+
+```r
 setwd("C:/Users/xgs/Desktop/Coursera_Data _Science/5-Reproducible Research/Week 2")
 Activity <- read.csv(paste(getwd(),"/Assignment/activity.csv", sep=""), header = TRUE
                 , sep = "," , colClasses = c("numeric","Date","numeric"))
@@ -31,7 +25,8 @@ names(Activity) <- c("Steps","Date","Interval")
 
 *Note: Because it seems that the few-steps values have frequencies much more higher than the rest, is difficult to see any interesting feature in this chart. To get more information let's change the* **Y scale to an square root of counts.** *Doing so we can appreciate more detail*
 
-```{r Histogram,echo=TRUE,fig.width = 12, fig.height = 8}
+
+```r
 ##      Remove NA
 ActivityClean <- Activity[complete.cases(Activity) == TRUE,]
 
@@ -55,17 +50,16 @@ gObj <- gObj + theme(axis.title = element_text(family = "A", size = 16)
                 , title = element_text(family = "A", size = 15)
                 , plot.title = element_text(vjust = 2))
 print(gObj)
-
 ```
 
-```{r Dummy,echo=FALSE}
-#       Prevents the chart to overlap the following text 
-```` 
+![plot of chunk Histogram](figure/Histogram.png) 
+
+
 
 *The mean and median total number of steps taken per day, once NA have been removed, are:*
 
-* **Median:** `r round(meanActivityCleanByDay,3)`
-* **Mean:** `r round(medianActivityCleanByDay,3)`
+* **Median:** 37.383
+* **Mean:** 37.378
 
 ####**QUESTION 3: What is the average daily activity pattern **  
 1. Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
@@ -73,7 +67,8 @@ print(gObj)
 
 *Procedure: aggregate Steps by Interval, determine the maximum value in the array and plot the data*
 
-```{r AverageSteps, echo = TRUE, fig.width = 12, fig.height = 8}
+
+```r
 ##      Aggregate steps by Interval and format of the new dataset
 ActivityCleanByStep <- aggregate(Steps ~ Interval, data = Activity, FUN = mean)
 
@@ -97,19 +92,18 @@ gObj <- gObj + theme(axis.title = element_text(family = "A", size = 15)
                 , title = element_text(family = "A", size = 20)
                 , plot.title = element_text(vjust = 2))
 print(gObj)
-
 ```
 
-```{r Dummy2,echo=FALSE}
-#       Prevents the chart to overlap the following text 
-```` 
+![plot of chunk AverageSteps](figure/AverageSteps.png) 
+
+
 
 *Determination of the interval which contains the most steps in average along the date range*  
 *The interval containing the most steps (orange point) is:*
 
-* **Index in data array:** `r indexMax`
-* **Interval:** `r valueMax$Interval`
-* **Steps:** `r round(valueMax$Steps,2)`
+* **Index in data array:** 104
+* **Interval:** 835
+* **Steps:** 206.17
 
 ####**QUESTION 4: Imputing missing values **  
 1. Calculate and report the total number of missing values in the dataset.  
@@ -118,21 +112,28 @@ print(gObj)
 4. Make a histogram of the total number of steps taken each day, calculate the mean and median. Evaluate differences with the non-NA dataset and estimate the impact of imputation.  
 
 *Total missing values from the original dataset*
-```{r MissingCount, echo=TRUE}
+
+```r
 ##      Marks the NA by a factor variable
 Activity$IsNa <- as.factor(!complete.cases(Activity))
 ##      Stores the summary for the factor variable
 SummIsNA <- summary(Activity$IsNa)
 SummIsNA
 ```
+
+```
+## FALSE  TRUE 
+## 15264  2304
+```
 *The amount of NA values in the original dataset is:*
 
-* **Total NA:** `r SummIsNA[2]`
-* **NA as % of Total:** `r round(SummIsNA[2] / (SummIsNA[1] + SummIsNA[2]) * 100,2)`%  
+* **Total NA:** 2304
+* **NA as % of Total:** 13.11%  
 
 *Procedure: Im using the strategy of replacing NA by the mean value of steps for the corresponding 5 minutes interval. This seems to me a better approach than imputing the mean of steps by day, since there are some days on the recordset without a valid value.*
 
-```{r Imputation, echo=TRUE}
+
+```r
 ##      Merge the Activity dataset with the dataframe of averages by day using the Interval field.
 Activity <- merge(Activity[,1:3],ActivityCleanByStep,by.x = "Interval",by.y = "Interval")
 names(Activity) <- c("Interval","Steps","Date","ImputedSteps")
@@ -145,7 +146,8 @@ Activity[which(!is.na(Activity$Steps)),]$AllSteps <- Activity[which(!is.na(Activ
 *The new Activity dataset contains the imputed values for steps, the histogram looks like this*
 *Note: As in the previous case, the Y scale matters to see details, so I'm using an* **squared Y scale**
 
-```{r ImputationHistogram, echo=TRUE, fig.width = 12, fig.height = 8}
+
+```r
 ##      Gets the mean and median for the total steps taken by day from the imputed values
 ActivityByDay <- aggregate(AllSteps ~ Date, data = Activity, FUN = mean)
 names(ActivityByDay) <- c("Date","Steps")
@@ -168,14 +170,14 @@ gObj <- gObj + theme(axis.title = element_text(family = "A", size = 16)
                 , plot.title = element_text(vjust = 2))
 print(gObj)
 ```
-```{r Dummy3,echo=FALSE}
-#       Prevents the chart to overlap the following text 
-``` 
+
+![plot of chunk ImputationHistogram](figure/ImputationHistogram.png) 
+
   
 *The statistical values evaluated for steps in the dataset, are:*
 
-* **Median:** `r round(medianActivityByDay,3)`
-* **Mean:** `r round(meanActivityByDay,3)`
+* **Median:** 37.383
+* **Mean:** 37.383
 
 *We can see the next interesting facts:*
 
@@ -187,19 +189,37 @@ print(gObj)
 1. Create a factor variable to indicate weekdays and weekends
 2. Make a time series plot of the 5-minute interval and the average number of steps taken by weekend / weekday
 
-```{r CreateWeekDaysVariable,echo=TRUE}
+
+```r
 ##      Creates a factor variable indicating whether each date is a weekday or weekend
 Sys.setlocale("LC_TIME", "English")
+```
+
+```
+## [1] "English_United States.1252"
+```
+
+```r
 Activity$DayType <- as.factor(ifelse(weekdays(Activity$Date) %in% c("Saturday","Sunday"), "Weekend","Weekday"))
 ##      Summarizes the steps taken by type of day using aggregate
 ActivityByDayType <- aggregate(AllSteps ~ DayType + Interval, data = Activity, FUN = sum)
 head(ActivityByDayType)
+```
 
-``` 
+```
+##   DayType Interval AllSteps
+## 1 Weekday        0 101.3019
+## 2 Weekend        0   3.4340
+## 3 Weekday        5  20.0377
+## 4 Weekend        5   0.6792
+## 5 Weekday       10   7.7925
+## 6 Weekend       10   0.2642
+```
 
 *The plot for the average steps taken per 5-minute intervals in two panels, one for weekdays and the other for weekends*
 
-```{r PlotPanelDayTypes,echo=TRUE,fig.width = 12, fig.height = 8}
+
+```r
 ##      Prepares the ggplot object with all the aestetics and features
 gObj <- ggplot(ActivityByDayType, aes(Interval, AllSteps, font_family = "A"))
 gObj <- gObj + theme_bw(base_family = "A", base_size = 14)
@@ -222,8 +242,11 @@ gObj <- gObj + theme(axis.title = element_text(family = "A", size = 16)
 print(gObj)
 ```
 
+![plot of chunk PlotPanelDayTypes](figure/PlotPanelDayTypes.png) 
+
 *This is an* **extra chart** *just to compare both sets of data in one plot*
-```{r PlotNoPanelDayTypes,echo=TRUE,fig.width = 12, fig.height = 8}
+
+```r
 gObj <- ggplot(ActivityByDayType, aes(Interval, AllSteps, font_family = "A"))
 gObj <- gObj + theme_bw(base_family = "A", base_size = 14)
 ##      Adding panels by DayType in 2 rows
@@ -237,3 +260,5 @@ gObj <- gObj + theme(axis.title = element_text(family = "A", size = 16)
                 , plot.title = element_text(vjust = 2))
 print(gObj)
 ```
+
+![plot of chunk PlotNoPanelDayTypes](figure/PlotNoPanelDayTypes.png) 
