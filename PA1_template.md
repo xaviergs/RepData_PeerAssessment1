@@ -61,7 +61,7 @@ print(gObj)
 * **Median:** 37.383
 * **Mean:** 37.378
 
-####**QUESTION 3: What is the average daily activity pattern **  
+####**QUESTION 3: What is the average daily activity pattern**  
 1. Make a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?  
 
@@ -105,7 +105,7 @@ print(gObj)
 * **Interval:** 835
 * **Steps:** 206.17
 
-####**QUESTION 4: Imputing missing values **  
+####**QUESTION 4: Imputing missing values**  
 1. Calculate and report the total number of missing values in the dataset.  
 2. Devise a strategy for filling in all of the missing values in the dataset.  
 3. Create a new dataset with the missing data filled in.  
@@ -185,7 +185,7 @@ print(gObj)
 * The median value for the imputed dataset has incresed and reached the same value as the median (also the standar deviation has decresing after imputing values). The distribution has become more "compact"
 * The imputation strategy does not impact highly on the results
 
-####**QUESTION 5: difference in activity patterns between weekdays and weekends **  
+####**QUESTION 5: difference in activity patterns between weekdays and weekends**  
 1. Create a factor variable to indicate weekdays and weekends
 2. Make a time series plot of the 5-minute interval and the average number of steps taken by weekend / weekday
 
