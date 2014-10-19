@@ -244,3 +244,13 @@ print(gObj)
 
 ![plot of chunk PlotPanelDayTypes](figure/PlotPanelDayTypes.png) 
 
+*From a quick look of the two patterns, we can see that the average steps taken for interval in weekdays and weekends is quite similar. However there are some differences that we can easily list as:*  
+
+1 - Activity starts at the same time in both weekdays and weekends (the subject wakes up at the same time).  
+2 - The ramp up in weekdays is higher than in weekends (weekends are "lazier").  
+3 - Activity peak is located at almos the same time in both sets.  
+4 - After the activity peak, weekends are less homogeneus thatn weekdays with meny ups and donws in the average of steps taken.  
+5 - Rest (steps near zero) starts at almost the same time in both cases, so apparently the start and end of day schedule for the subject is simiar over the week.  
+
+
+
