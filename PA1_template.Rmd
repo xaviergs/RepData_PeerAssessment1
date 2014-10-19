@@ -192,7 +192,7 @@ print(gObj)
 Sys.setlocale("LC_TIME", "English")
 Activity$DayType <- as.factor(ifelse(weekdays(Activity$Date) %in% c("Saturday","Sunday"), "Weekend","Weekday"))
 ##      Summarizes the steps taken by type of day using aggregate
-ActivityByDayType <- aggregate(AllSteps ~ DayType + Interval, data = Activity, FUN = sum)
+ActivityByDayType <- aggregate(AllSteps ~ DayType + Interval, data = Activity, FUN = mean)
 head(ActivityByDayType)
 
 ``` 
@@ -222,18 +222,3 @@ gObj <- gObj + theme(axis.title = element_text(family = "A", size = 16)
 print(gObj)
 ```
 
-*This is an* **extra chart** *just to compare both sets of data in one plot*
-```{r PlotNoPanelDayTypes,echo=TRUE,fig.width = 12, fig.height = 8}
-gObj <- ggplot(ActivityByDayType, aes(Interval, AllSteps, font_family = "A"))
-gObj <- gObj + theme_bw(base_family = "A", base_size = 14)
-##      Adding panels by DayType in 2 rows
-gObj <- gObj + geom_point(aes(color = DayType),size = 3.5, alpha = .6)
-##      Setting the annotations
-gObj <- gObj + xlab("Interval")
-gObj <- gObj + ylab("Steps Taken")
-gObj <- gObj + ggtitle("(Extra chart) Steps by 5-minute interval in different day types")
-gObj <- gObj + theme(axis.title = element_text(family = "A", size = 16)
-                , title = element_text(family = "A", size = 20)
-                , plot.title = element_text(vjust = 2))
-print(gObj)
-```
